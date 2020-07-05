@@ -5,6 +5,7 @@
     --white-textcolor: #FFFFFF;
     --main-backgroundcolor: #FFFFFF;
     --secondary-backgroundcolor: #F5F4FA;
+    --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 html {
@@ -34,6 +35,10 @@ body {
     margin-right: 200px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+a {
+    transition: color 250ms var(--timing-function);
 }
 
 a:hover,
@@ -79,16 +84,41 @@ a.logo {
 
 .nav-links a {
     display: block;
+    position: relative;
+
     padding-top: 32px;
     padding-bottom: 32px;
    
     color: inherit;   
 }
 
+.nav-links a::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    
+    transform: scaleX(0);
+    transition: transform 250ms 250ms var(--timing-function);
+
+    display: block;
+    width: 100%;
+    height: 4px;
+    background-color:var(--accent-color);
+    border-radius: 2px;
+}
+
 .nav-links a:hover,
-.nav-links a:focus {
+.nav-links a:focus,
+.nav-links a.activated {
     color: var(--accent-color);
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-links a:hover::after,
+.nav-links a:focus::after,
+.nav-links a.activated::after {
+    transform: scaleX(1);
 }
 
 .nav-contacts {
@@ -98,9 +128,10 @@ a.logo {
 .nav-contacts a {
     display: flex;
     align-items: center;
+    color: var(--grey-textcolor);
+    transition: color 250ms var(--timing-function);
     padding-top: 32px;
     padding-bottom: 32px;
-    color: var(--grey-textcolor);
 }
 
 .email {
@@ -131,8 +162,7 @@ a.logo {
 .email:hover,
 .phone:hover {
     color: var(--accent-color);
-    --color1:#2196F3;
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --color1:var(--accent-color); 
 }
 
 /*Герой/Jumbotron*/
@@ -176,12 +206,14 @@ a.logo {
     font-size: 16px;
     line-height: 1.9;
     background-color: var(--accent-color);
+    transition: background-color 250ms va(--timing-function);
 }
+
 /*имитация кнопки, т.к. кнопки сказали не использовать; изменения при hover и focus видно в дубликате макета*/
 .jumbotron-button:hover,
 .jumbotron-button:focus {
     background-color: #188ce8;
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    
 }
 
 .jumbotron-button:visited {
@@ -200,14 +232,14 @@ a.logo {
     padding-right: 15px;
 }
 
-.advantages-list .item {
+.advantages-list .pref {
     width: calc((100% - 90px) / 4);
     margin-top: 94px;
     margin-bottom: 94px; 
     margin-right: 30px;
 }
 
-.advantages-list .item:nth-child(4n) {
+.advantages-list .pref:nth-child(4n) {
     margin-right: 0;
 }
 
@@ -231,7 +263,7 @@ a.logo {
     text-align: center;
 }
 
-.advantages-list .item::before {
+.advantages-list .pref::before {
     display: block; 
     content: "";
     height: 120px;
@@ -327,6 +359,7 @@ a.logo {
 .team-member {
     display: block;
 }
+
 .team-title {
     margin-top: 0;
     margin-bottom: 50px;  
@@ -394,6 +427,10 @@ a.logo {
     height: 44px;
     width: 44px;
     color: #AFB1B8;
+    border-radius: 0;
+    transition: color 250ms var(--timing-function) 250ms,
+    background-color 250ms var(--timing-function) 250ms,
+    border-radius 250ms var(--timing-function) 250ms;
 }
 
 .social-items a:last-child {
@@ -411,9 +448,7 @@ a.logo {
 .social-items a:focus {
     background-color: var(--accent-color);
     border-radius: 50%;
-    color: #FFFFFF;
-
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    color: #FFFFFF;   
 }
 
 /* Клиенты */
@@ -446,14 +481,14 @@ a.logo {
     margin-right: 30px;
     padding-top: 21px;
     color: #AFB1B8;
+    transition: color 250ms var(--timing-function),
+    border 250ms var(--timing-function);
 }
 
 .clients-list a:hover,
 .clients-list a:focus {
     border: 1px solid var(--accent-color);
     color: var(--accent-color);
-
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clients-list a:last-child {
@@ -531,6 +566,7 @@ a.logo {
     background-size: auto;
     background-repeat: no-repeat;
     background-position: center;
+    transition: background-color 250ms var(--timing-function);
 }
 
 .social-net .instagram {
@@ -553,7 +589,7 @@ a.logo {
 .social-net .social-link:focus {
     background-color: var(--accent-color);
 
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    
 }
 
 .logo-footer {
@@ -570,13 +606,12 @@ a.logo {
 
 .footer-contacts a {
     color:rgba(255, 255, 255, 0.6);
+    transition: color 250ms var(--timing-function);
 }
 
 .footer-contacts a:hover,
 .footer-contacts a:focus {
     color: var( --accent-color);
-
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* позже вставим email-input; button */
@@ -619,7 +654,16 @@ a.logo {
     padding-right: 22px;
     border-radius: 4px;
 
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.63;
+    text-align: center;
+    color: var(--main-textcolor);
     background-color: var(--secondary-backgroundcolor); 
+
+    transition: color 250ms var(--timing-function) 250ms,
+    box-shadow 250ms var(--timing-function) 250ms,
+    background-color 250ms var(--timing-function) 250ms;
 }
 
 .radio-button a:not(:last-child) {
@@ -651,21 +695,11 @@ a.logo {
     height: 38px;
 }
 
-.radio-button a {
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.63;
-    text-align: center;
-    color: var(--main-textcolor);
-}
-
 .radio-button a:hover,
 .radio-button a:focus {
     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 3px 1px rgba(0, 0, 0, 0.1);
     color: var(--white-textcolor);
     background-color: var(--accent-color);
-
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /*многострочный flex-container*/
@@ -722,7 +756,7 @@ a.logo {
     width: 100%;
     height: 100%;
     
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 250ms var(--timing-function) 250ms;
     
     padding: 63px 24px;
     text-align: left;
@@ -741,5 +775,5 @@ a.logo {
 .item:focus {
     border: 1px solid #EEEEEE;
     box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.16), 0px 4px 4px rgba(0, 0, 0, 0.06), 0px 1px 1px rgba(0, 0, 0, 0.12);
-    transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 250ms var(--timing-function);
 }
